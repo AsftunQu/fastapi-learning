@@ -28,40 +28,31 @@
 
 ## 上手须知
 
-- 1.弄懂什么时候用POST、GET、PUT和DELETE
-本质上就是增删改查，POST相当于增，GET相当于查，PUT相当于改
+### 1️⃣ HTTP 方法选择
 
-- 2.弄明白各个类如何使用，例如Path、Query、Body、Field和Optional
-Path从URL路径中取值，来源于URL路径
-Query从URL中的?后面取值，来源于URL参数
-Body从HTTP请求体中取值，来源于JSON数据
-Filed用于定义模型中的字段校验，来源于模型内部
-Optional表示字段可以是None，来源于类型注解
+本质上就是**增删改查**：
 
-##### 记忆口诀：路径用Path，问号用Query，JSON用Body，模型字段用Field
+| 方法 | 对应操作 | 说明 |
+|:---:|:---:|:---|
+| `POST` | **增**（Create） | 创建新数据 |
+| `GET` | **查**（Read） | 查询数据 |
+| `PUT` | **改**（Update） | 更新已有数据 |
+| `DELETE` | **删**（Delete） | 删除数据 |
 
 ---
 
-## 完整决策流程图
+### 2️⃣ 参数类型速查
 
-你要做什么？
-    │
-    ├─ 只查询数据，不修改 → GET
-    │   ├─ 需要从 URL 中取 ID → Path
-    │   ├─ 需要过滤/分页 → Query
-    │   └─ 不需要请求体
-    │
-    ├─ 创建新数据 → POST
-    │   ├─ 数据放哪里 → Body
-    │   ├─ 字段校验 → Field
-    │   ├─ 可选字段 → Optional
-    │   └─ 路径参数 → 看情况（如 POST /users/{group_id}）
-    │
-    ├─ 更新已有数据 → PUT
-    │   ├─ 从 URL 取 ID → Path（必填）
-    │   ├─ 新数据放哪里 → Body
-    │   ├─ 字段校验 → Field
-    │   └─ 可选字段 → Optional
-    │
-    └─ 删除数据 → DELETE
-        └─ 从 URL 取 ID → Path（必填）
+| 参数 | 数据来源 | 用途 |
+|:---|:---|:---|
+| `Path` | URL 路径 | 从 URL 路径中取值，如 `/items/{id}` |
+| `Query` | URL 参数 | 从 `?` 后面取值，如 `?skip=20` |
+| `Body` | HTTP 请求体 | 从 JSON 数据中取值 |
+| `Field` | 模型内部 | 定义模型中的字段校验规则 |
+| `Optional` | 类型注解 | 表示字段可以是 `None` |
+
+> 💡 **记忆口诀**：路径用 `Path`，问号用 `Query`，JSON 用 `Body`，模型字段用 `Field`
+
+---
+
+## 🔀 完整决策流程图
